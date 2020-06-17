@@ -1,0 +1,1 @@
+# androinfo.sh
