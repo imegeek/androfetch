@@ -1,0 +1,145 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+# Author : ABHacker Official
+# Copyright : ©2020-30-DEC
+# androfetch + MIT LICENSE (^^)
+# Script follows here:
+
+command -v lolcat &> /dev/null || { apt update; apt upgrade -y; gem install lolcat;}
+
+col1=$"\e[0;1;38;5;46m"
+col2=$"\e[0;1m"
+col3=$"\e[0m"
+
+distro=$(uname -o | grep -o "Android")
+shell=$(printf "$SHELL" | cut -c 37- | head -n1)
+
+wait() {
+sleep 0
+}
+
+device() {
+printf "`getprop ro.product.manufacturer` %s"
+printf "`getprop ro.product.model` %s"
+printf "(`getprop ro.product.device`)%s \n"
+}
+
+uptotime() {
+boot=$(date -d"$(uptime -s)" +%s)
+now=$(date +%s)
+s=$((now - boot))
+
+d="$((s / 60 / 60 / 24)) days"
+h="$((s / 60 / 60 % 24)) hours"
+m="$((s / 60 % 60)) minute"
+
+((${d/ *} == 1)) && d=${d/s}
+((${h/ *} == 1)) && h=${h/s}
+((${m/ *} == 1)) && m=${m/s}
+
+((${d/ *} == 0)) && unset d
+((${h/ *} == 0)) && unset h
+((${m/ *} == 0)) && unset m
+
+uptime=${d:+$d, }${h:+$h, }$m
+uptime=${uptime%', '}
+uptime=${uptime:-$s secs}
+printf "$uptime%s\n"
+}
+
+
+cpu() {
+core=`awk -F': ' '/^Processor/ {P=$2} /^CPU architecture/ {H=$2} END {print H != "" ? H : P}' /proc/cpuinfo`
+cpu0=`awk -F': ' '/^Processor/ {P=$2} /^Hardware/ {H=$2} END {print H != "" ? H : P}' /proc/cpuinfo`
+printf "${cpu0}"
+printf " (${core})%s\n"
+}
+
+mem() {
+ram=$(free -b | awk 'NR==2{print $2"-"$7}')
+usedram=$((ram / 1024 / 1024))
+totalram=$((${ram//-*} / 1024 / 1024))
+ram="${usedram}MiB / ${totalram}MiB" ; printf "$ram"
+}
+
+android() {
+printf "                  %s\n";wait
+printf "         ╲ ▁▂▂▂▁ ╱%s\n";wait
+printf "         ▄███████▄%s\n";wait
+printf "        ▄██ ███ ██▄%s\n";wait
+printf "       ▄███████████▄%s\n";wait
+printf "    ▄█ ▄▄▄▄▄▄▄▄▄▄▄▄▄ █▄%s\n";wait
+printf "    ██ █████████████ ██%s\n";wait
+printf "    ██ █████████████ ██%s\n";wait
+printf "    ██ █████████████ ██%s\n";wait
+printf "    ██ █████████████ ██%s\n";wait
+printf "       █████████████%s\n";wait
+printf "        ███████████%s\n";wait
+printf "         ██     ██%s\n";wait
+printf "         ██     ██%s\n";wait
+printf "                  %s\n";wait
+}
+system() {
+printf "${col2}%s";wait
+printf " Username    :  `whoami`@`hostname`%s\n" ;wait
+printf " Device      :  ";device ;wait
+printf " Version     :  "`uname -o` ;printf " ";getprop ro.build.version.release ;wait
+printf " Basebrand   :  ";getprop ro.baseband ;wait
+printf " Packages    :  `dpkg -l | wc -l` (pkg)%s\n" ;wait
+printf " Shell       :  $shell%s\n";wait
+printf " Rom         :  ";getprop ro.build.display.id ;wait
+printf " Arch        :  ";uname -m ;wait
+printf " Karnel      :  ";uname -r ;wait
+printf " Uptime      :  ";uptotime ;wait
+printf " Cpu         :  ";cpu ;wait
+printf " Ram         :  `mem`%s\n";wait
+printf "                 %s\n";wait
+}
+
+system1() {
+printf "${col2}%s";wait
+printf " ${col1}Username    :${col2}  `whoami`@`hostname`%s\n" ;wait
+printf " ${col1}Device      :${col2}  ";device ;wait
+printf " ${col1}Version     :${col2}  "`uname -o` ;printf " ";getprop ro.build.version.release ;wait
+printf " ${col1}Basebrand   :${col2}  ";getprop ro.baseband ;wait
+printf " ${col1}Packages    :${col2}  `dpkg -l | wc -l` (pkg)%s\n" ;wait
+printf " ${col1}Shell       :${col2}  $shell%s\n";wait
+printf " ${col1}Rom         :${col2}  ";getprop ro.build.display.id ;wait
+printf " ${col1}Arch        :${col2}  ";uname -m ;wait
+printf " ${col1}Karnel      :${col2}  ";uname -r ;wait
+printf " ${col1}Uptime      :${col2}  ";uptotime ;wait
+printf " ${col1}Cpu         :${col2}  ";cpu ;wait
+printf " ${col1}Ram         :${col2}  `mem`%s\n";wait
+printf " ${col1}             ${col2}   %s\n";wait
+}
+
+android+system() { android ; system ;}
+
+if [[ $distro == *'Android'* ]]; then
+
+if [[ "$1" == "--nocolor" ]];then
+printf "${col2}"
+sleep 0.2
+android
+system
+exit
+
+elif [[ "$1" == "--color" ]];then
+printf "${col2}"
+android+system | lolcat -a -t -s 100 -d 1
+exit
+
+elif [[ "$1" == "--help" ]] || [[ "$1" == "-h" ]];then
+printf "
+androfetch command:
+--nocolor         Show androfetch without colors
+--color           Show androfetch with RGB colors
+"
+exit
+fi
+
+printf "${col1}"
+android
+system1
+exit
+fi
