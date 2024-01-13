@@ -1,8 +1,8 @@
 # androfetch
 
-[![GitHub followers](https://img.shields.io/github/followers/abhackerofficial.svg?style=social)](https://github.com/abhackerofficial)
-[![GitHub stars](https://img.shields.io/github/stars/abhackerofficial/androfetch.svg?style=social)](https://github.com/abhackerofficial)
-[![GitHub forks](https://img.shields.io/github/forks/abhackerofficial/androfetch.svg?style=social)](https://github.com/abhackerofficial)
+[![GitHub followers](https://img.shields.io/github/followers/imegeek.svg?style=social)](https://github.com/imegeek)
+[![GitHub stars](https://img.shields.io/github/stars/imegeek/androfetch.svg?style=social)](https://github.com/imegeek)
+[![GitHub forks](https://img.shields.io/github/forks/imegeek/androfetch.svg?style=social)](https://github.com/imegeek)
 
 
 > Screenshots :
@@ -14,23 +14,16 @@
 <img width="80%" src="https://user-images.githubusercontent.com/63346676/101584522-e79bea80-3a03-11eb-8332-96080fbcad93.jpg"/>
 </p>
 
-> Basic Installation :
-
-| Method    | Command
-|:----------|:--------------------------------------------------------------------------------------------------|
-|  **curl** |`curl --progress-bar -L --fail --retry 4 -O https://github.com/abhackerofficial/androfetch/raw/master/androfetch.deb ;apt install ./androfetch.deb` |
-
-> Manual Installation :
+> Installation :
 ```bash
-git clone https://github.com/abhackerofficial/androfetch
+git clone https://github.com/imegeek/androfetch
 cd androfetch
-apt install ./androfetch.deb
 ```
 
 > Usage :
-+ $ androfetch
-+ $ androfetch --color
-+ $ androfetch --nocolor
++ $ bash androfetch
++ $ bash androfetch --color
++ $ bash androfetch --nocolor
 
 > Get help :
-+ $ androfetch -h
++ $ bash androfetch -h

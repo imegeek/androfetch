@@ -1,8 +1,8 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-# Author : ABHacker Official
-# Copyright : ©2020-30-DEC
-# androfetch + MIT LICENSE (^^)
+# Author : Im Geek
+# Created : 2020-30-DEC
+# androfetch + MIT LICENSE (Open Source)
 # Script follows here:
 
 command -v lolcat &> /dev/null || { apt update; apt upgrade -y; gem install lolcat;}
